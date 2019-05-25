@@ -36,16 +36,22 @@ class CommandArgs(object):
         if self.len == 2:
             self.show()
         elif self.len == 3:
-            self.prnt(argv[2])
+            command = self.ls.get(argv[2])
+            if command:
+                print(command)
+            else:
+                self.invalid()
         else:
             self.invalid()
 
     def check(self):
         if self.len == 1:
-            self.show()
+            self.invalid()
         if self.len > 1:
             if argv[1] == '-h' or argv[1] == '--help':
                 self.help()
+            else:
+                self.invalid()
 
 
 commands = CommandArgs()
