@@ -73,7 +73,6 @@ class CommandArgs(object):
             if cm:
                 cm()
             else:
-                print(">>>check<<<")
                 self.invalid()
 
 
