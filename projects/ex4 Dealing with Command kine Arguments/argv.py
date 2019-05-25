@@ -12,8 +12,13 @@ class CommandArgs(object):
             """,
             'sum':
             """
-            sum         'sum' is used to sum 2 arguments. ex: sum 1 2
+            sum         'sum' is used to sum 2 arguments and more. ex: sum 1 2
             """
+        }
+        self.commands = {
+            '-h': self.help,
+            '--help': self.help,
+            'sum': self.sum
         }
 
     def show(self):
@@ -44,13 +49,31 @@ class CommandArgs(object):
         else:
             self.invalid()
 
+    def sum(self):
+        if self.len < 4:
+            self.prnt('sum')
+        else:
+            argv.pop(0)
+            argv.pop(0)
+            total = 0
+            for arg in argv:
+                try:
+                    arg = int(arg)
+                    total += arg
+                except ValueError:
+                    print("\n\tError! Arguments for 'sum' must be integers\n")
+                    return
+            print('\n\t', total, '\n')
+
     def check(self):
         if self.len == 1:
             self.invalid()
         if self.len > 1:
-            if argv[1] == '-h' or argv[1] == '--help':
-                self.help()
+            cm = self.commands.get(argv[1])
+            if cm:
+                cm()
             else:
+                print(">>>check<<<")
                 self.invalid()
 
 
